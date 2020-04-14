@@ -9,6 +9,7 @@ import { CurrentDayDirective } from './directives-pipes/current-day.directive';
 import { QuickAddEventComponent } from './components/quick-add-event/quick-add-event.component';
 import { AddEventComponent } from './components/add-event/add-event.component';
 import { SearchEventsPopupComponent } from './components/search-events-popup/search-events-popup.component';
+import { HostDirective } from './directives-pipes/host.directive';
 
 @NgModule({
   declarations: [
@@ -20,11 +21,13 @@ import { SearchEventsPopupComponent } from './components/search-events-popup/sea
     QuickAddEventComponent,
     AddEventComponent,
     SearchEventsPopupComponent,
+    HostDirective,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [QuickAddEventComponent, AddEventComponent]
 })
 export class AppModule { }

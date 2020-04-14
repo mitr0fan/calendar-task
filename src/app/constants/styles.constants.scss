@@ -1,2 +1,15 @@
 $gray: rgb(233, 233, 233);
 $fs-normal: 10pt;
+$light-blue: rgb(130, 199, 255);
+$blue: rgb(83, 178, 255);
+
+@mixin button {
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid $gray;
+    background: linear-gradient(#fff, $gray);
+    height: 25px;
+    &:hover {
+        cursor: pointer;
+    }
+}

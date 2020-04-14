@@ -1,1 +1,12 @@
-<p>quick-add-event works!</p>
+<div
+    class="quick-add-event"
+    [style.top]="coords.y + 'px'"
+    [style.left]="coords.x + 'px'"
+>
+    <span (click)="close()" class="quick-add-event__exit">🞩</span>
+    <input
+        class="quick-add-event__input" type="text"
+        placeholder="5 марта, 14:00, День рождения"
+    >
+    <button class="quick-add-event__button">Создать</button>
+</div>

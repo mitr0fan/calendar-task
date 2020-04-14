@@ -1,0 +1,46 @@
+@import '../../constants/styles.constants.scss';
+
+.quick-add-event {
+    position: absolute;
+    background: #fff;
+    padding: 20px;
+    height: 70px;
+    width: 250px;
+    box-shadow: 0 0 5px;
+    .quick-add-event__exit {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    .quick-add-event__input {
+        width: 246px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        outline: none;
+    }
+    .quick-add-event__button {
+        @include button();
+    }
+    &::after, &::before {
+        content: '';
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        box-shadow: 0 0 5px;
+        transform: rotate(45deg);
+        top: -7px;
+        left: 30px;
+        background: #fff;
+    }
+    &::before {
+        transform: rotate(0);
+        top: 0px;
+        left: 20px;
+        z-index: 1;
+        width: 30px;
+        box-shadow: none;
+    }
+}
