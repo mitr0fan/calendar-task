@@ -1,0 +1,31 @@
+<div class="calendar-container">
+    <div class="change-month">
+        <button
+            class="button change-month__previous"
+            (click)="previousMonth()"
+        >
+            ◀
+        </button>
+        <span class="change-month__date" *ngIf="month.date.length > 0">{{currentDate}}</span>
+        <button
+            class="button change-month__next"
+            (click)="nextMonth()"
+        >
+            ▶
+        </button>
+        <button
+            class="button change-month__today"
+            (click)="today()"
+        >
+            Сегодня
+        </button>
+    </div>
+    <div class="calendar">
+        <app-date-item
+            *ngFor="let day of month.date; let i = index"
+            [day]="day"
+            [index]="i"
+            [appCurrentDay]="day"
+        ></app-date-item>
+    </div>
+</div>

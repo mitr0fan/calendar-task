@@ -1,0 +1,4 @@
+<div class="day">
+    <span *ngIf="index < 7">{{daysOfWeek[index]}}, {{day | date:'d'}}</span>
+    <span *ngIf="index > 6">{{day | date:'d'}}</span>
+</div>
