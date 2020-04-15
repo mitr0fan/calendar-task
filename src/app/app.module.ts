@@ -12,6 +12,7 @@ import { SearchEventsPopupComponent } from './components/search-events-popup/sea
 import { HostDirective } from './directives-pipes/host.directive';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { ContainerDirective } from './directives-pipes/container.directive';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { DatePipe } from '@angular/common';
     AddEventComponent,
     SearchEventsPopupComponent,
     HostDirective,
+    ContainerDirective,
   ],
   imports: [
     BrowserModule,

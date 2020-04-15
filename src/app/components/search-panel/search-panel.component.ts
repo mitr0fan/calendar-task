@@ -5,6 +5,7 @@ import { SearchEventsPopupComponent } from '../search-events-popup/search-events
 import { SearchEventService } from 'src/app/services/search-event.service';
 import { debounceTime, filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { ContainerDirective } from 'src/app/directives-pipes/container.directive';
 
 @Component({
   selector: 'app-search-panel',
@@ -14,6 +15,7 @@ import { Subscription } from 'rxjs';
 export class SearchPanelComponent implements OnDestroy {
 
   @ViewChild(HostDirective, {static: true}) host: HostDirective;
+  @ViewChild(ContainerDirective, {static: true}) container: ContainerDirective;
   sub: Subscription;
 
   constructor(
@@ -39,14 +41,14 @@ export class SearchPanelComponent implements OnDestroy {
 
   openSearchList(e: Event, events: any) {
     const resolver = this.componentFactoryResolver.resolveComponentFactory(SearchEventsPopupComponent);
-    const el = this.host.viewContainerRef.createComponent(resolver);
+    const el = this.container.viewContainerRef.createComponent(resolver);
     el.instance.inputEvent = e;
     el.instance.events = events;
     el.instance.parent = this;
   }
 
   closeSearchList() {
-    this.host.viewContainerRef.clear();
+    this.container.viewContainerRef.clear();
   }
 
   searchEvents(e: Event, value: string) {
