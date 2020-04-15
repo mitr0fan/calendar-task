@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ComponentFactoryResolver, ComponentFactory, ComponentRef } from '@angular/core';
 import { CreateCalendarService } from 'src/app/services/create-calendar.service';
-import { Month } from 'src/app/types/month';
 import { CONSTANTS } from 'src/app/constants/constants';
+import { HostDirective } from 'src/app/directives-pipes/host.directive';
+import { AddEventComponent } from '../add-event/add-event.component';
+import { EventsService } from 'src/app/services/events.service';
+import { EventsStore } from 'src/app/types/events-store';
+import { DatePipe } from '@angular/common';
+import { Event as EventInterface } from 'src/app/types/event';
 
 @Component({
   selector: 'app-calendar',
@@ -10,36 +15,67 @@ import { CONSTANTS } from 'src/app/constants/constants';
 })
 export class CalendarComponent implements OnInit {
 
-  month: Month = {date: [], events: []};
+  dates: Date[];
+  events: EventsStore;
   currentDate: string;
+  selectedDay: Date;
+  @ViewChild(HostDirective, {static: true}) host: HostDirective;
 
-  constructor(private createCalendar: CreateCalendarService) { }
+  constructor(
+    private createCalendar: CreateCalendarService,
+    private resolver: ComponentFactoryResolver,
+    private eventsService: EventsService,
+    public datePipe: DatePipe
+  ) { }
 
   ngOnInit() {
-    this.month.date = this.createCalendar.createMonth(new Date());
+    this.dates = this.createCalendar.createMonth(new Date());
     this.changeCurrentDate();
+    this.eventsService.changeEvent$
+    .subscribe(() => {
+      this.events = {...this.eventsService.getEvents()};
+    });
   }
 
   changeCurrentDate() {
     this.currentDate = `${
-      CONSTANTS.MONTHS[this.month.date[10].getMonth()]
+      CONSTANTS.MONTHS[this.dates[10].getMonth()]
       } ${
-        this.month.date[10].getFullYear()
+        this.dates[10].getFullYear()
       }`;
   }
 
   previousMonth() {
-    this.month.date = this.createCalendar.previousMonth(this.month.date[10]);
+    this.dates = this.createCalendar.previousMonth(this.dates[10]);
     this.changeCurrentDate();
   }
 
   nextMonth() {
-    this.month.date = this.createCalendar.nextMonth(this.month.date[10]);
+    this.dates = this.createCalendar.nextMonth(this.dates[10]);
     this.changeCurrentDate();
   }
 
   today() {
-    this.month.date = this.createCalendar.createMonth(new Date());
+    this.dates = this.createCalendar.createMonth(new Date());
     this.changeCurrentDate();
+  }
+
+  openAddEventPopup(e: Event, day: Date, dayEvent?: EventInterface) {
+    this.host.viewContainerRef.clear();
+    const factory
+    : ComponentFactory<AddEventComponent> = this.resolver.resolveComponentFactory(AddEventComponent);
+    const child: ComponentRef<AddEventComponent> = this.host.viewContainerRef.createComponent(factory);
+
+    child.instance.parent = this;
+    child.instance.eventClick = e;
+    child.instance.self = child.location.nativeElement;
+    child.instance.day = day;
+    if (dayEvent) {
+      child.instance.event = dayEvent;
+    }
+  }
+
+  closeAddEventPopup() {
+    this.host.viewContainerRef.clear();
   }
 }

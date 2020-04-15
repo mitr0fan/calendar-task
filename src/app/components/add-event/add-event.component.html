@@ -1,14 +1,45 @@
-<div class="add-event">
-    <span class="add-event__exit">🞩</span>
-    <input class="add-event__input" type="text" placeholder="Событие">
-    <input class="add-event__input" type="text" placeholder="День, месяц, год">
-    <input class="add-event__input" type="text" placeholder="Имена участников">
+<div
+    class="add-event"
+    [style.left]="coords.x + 'px'"
+    [style.top]="coords.y + 'px'"
+    [formGroup]="form"
+>
+    <span class="add-event__exit" (click)="close()">🞩</span>
+    <input
+        class="add-event__input add-event__input-name"
+        type="text"
+        placeholder="Событие"
+        formControlName="name"
+    >
+    <input
+        class="add-event__input"
+        type="text"
+        placeholder="День, месяц, год"
+        formControlName="date"
+    >
+    <input
+        class="add-event__input"
+        type="text"
+        placeholder="Имена участников"
+        formControlName="participants"
+    >
     <textarea
         class="add-event__description"
         type="text"
         rows="8"
         placeholder="Описание"
+        formControlName="description"
     ></textarea>
-    <button class="add-event__button">Готово</button>
-    <button class="add-event__button">Удалить</button>
+    <button class="add-event__button" (click)="saveEvent()">Готово</button>
+    <button class="add-event__button" (click)="deleteEvent()">Удалить</button>
+    <div
+        class="add-event__pointer"
+        [style.top]="pointerCoords.y + 'px'"
+        [style.left]="pointerCoords.x + 'px'"
+    ></div>
+    <div
+        class="add-event__pointer-hide"
+        [style.top]="pointerHideCoords.y + 'px'"
+        [style.left]="pointerHideCoords.x + 'px'"
+    ></div>
 </div>

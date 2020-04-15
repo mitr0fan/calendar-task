@@ -1,6 +1,8 @@
-import { Component, ViewChild, ComponentFactoryResolver, ComponentRef } from '@angular/core';
+import { Component, ViewChild, ComponentFactoryResolver } from '@angular/core';
 import { HostDirective } from 'src/app/directives-pipes/host.directive';
 import { QuickAddEventComponent } from '../quick-add-event/quick-add-event.component';
+import { SearchEventsPopupComponent } from '../search-events-popup/search-events-popup.component';
+import { SearchEventService } from 'src/app/services/search-event.service';
 
 @Component({
   selector: 'app-search-panel',
@@ -9,7 +11,10 @@ import { QuickAddEventComponent } from '../quick-add-event/quick-add-event.compo
 })
 export class SearchPanelComponent {
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+  constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private searchEventsService: SearchEventService
+  ) { }
 
   @ViewChild(HostDirective, {static: true}) host: HostDirective;
 
@@ -23,6 +28,19 @@ export class SearchPanelComponent {
 
   closeEventEditor() {
     this.host.viewContainerRef.clear();
+  }
+
+  openSearchList() {
+    const resolver = this.componentFactoryResolver.resolveComponentFactory(SearchEventsPopupComponent);
+    const searchElem = this.host.viewContainerRef.createComponent(resolver);
+  }
+
+  closeSearchList() {
+    this.host.viewContainerRef.clear();
+  }
+
+  searchEvents(value: string) {
+    this.searchEventsService.searchValue$.next(value);
   }
 
 }

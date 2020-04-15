@@ -10,6 +10,8 @@ import { QuickAddEventComponent } from './components/quick-add-event/quick-add-e
 import { AddEventComponent } from './components/add-event/add-event.component';
 import { SearchEventsPopupComponent } from './components/search-events-popup/search-events-popup.component';
 import { HostDirective } from './directives-pipes/host.directive';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -25,9 +27,11 @@ import { HostDirective } from './directives-pipes/host.directive';
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
-  entryComponents: [QuickAddEventComponent, AddEventComponent]
+  entryComponents: [QuickAddEventComponent, AddEventComponent, SearchEventsPopupComponent]
 })
 export class AppModule { }

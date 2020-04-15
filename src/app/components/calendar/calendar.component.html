@@ -6,7 +6,7 @@
         >
             ◀
         </button>
-        <span class="change-month__date" *ngIf="month.date.length > 0">{{currentDate}}</span>
+        <span class="change-month__date" *ngIf="dates.length > 0">{{currentDate}}</span>
         <button
             class="button change-month__next"
             (click)="nextMonth()"
@@ -21,11 +21,23 @@
         </button>
     </div>
     <div class="calendar">
-        <app-date-item
-            *ngFor="let day of month.date; let i = index"
-            [day]="day"
-            [index]="i"
-            [appCurrentDay]="day"
-        ></app-date-item>
+        <ng-container *ngFor="let day of dates; let i = index">
+            <app-date-item
+                *ngIf="events[day | date:'dd.MM.yyyy']"
+                [day]="day"
+                [index]="i"
+                [appCurrentDay]="day"
+                [event]="events[day | date:'dd.MM.yyyy']"
+                (click)="openAddEventPopup($event, day, events[datePipe.transform(day, 'dd.MM.yyyy')])"
+            ></app-date-item>
+            <app-date-item
+                *ngIf="!events[day | date:'dd.MM.yyyy']"
+                [day]="day"
+                [index]="i"
+                [appCurrentDay]="day"
+                (click)="openAddEventPopup($event, day)"
+            ></app-date-item>
+        </ng-container>
     </div>
 </div>
+<ng-template appHost></ng-template>

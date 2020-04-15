@@ -7,8 +7,8 @@
     background: #fff;
     box-sizing: border-box;
     padding: 20px;
-    overflow: hidden;
     box-shadow: 0 0 5px;
+    z-index: 1;
     .add-event__exit {
         position: absolute;
         top: 2px;
@@ -24,15 +24,43 @@
         margin-bottom: 20px;
         max-height: 130px;
         min-height: 130px;
+        outline: none;
+        border: 1px solid #fff;
+    }
+    .add-event__description:focus {
+        border: 1px solid rgb(129, 129, 129);
     }
     .add-event__input {
         outline: none;
         height: 20px;
         width: 98%;
         margin-bottom: 5px;
+        border: 1px solid #fff;
+    }
+    .add-event__input:focus {
+        border: 1px solid rgb(129, 129, 129);
+    }
+    .add-event__input-name {
+        font-weight: 700;
     }
     .add-event__button {
         @include button();
         margin-right: 10px;
+    }
+    .add-event__pointer {
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        background: #fff;
+        transform: rotate(45deg);
+        z-index: 5;
+        box-shadow: 0 0 5px;
+    }
+    .add-event__pointer-hide {
+        position: absolute;
+        height: 40px;
+        width: 20px;
+        background: #fff;
+        z-index: 5;
     }
 }

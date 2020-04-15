@@ -10,16 +10,21 @@ export class CreateCalendarService {
 
   createMonth(date: Date) {
     const month = [];
+    const firstDay = this.setFirstDay(date);
+    for (let i = 0; i < 35; i++) {
+      month.push(new Date(firstDay.getTime() + i * CONSTANTS.MS_IN_DAY));
+    }
+    return month;
+  }
+
+  setFirstDay(date: Date) {
     let firstDay: Date = new Date(date.getTime() - CONSTANTS.MS_IN_DAY * (date.getDate() - 1));
     if (firstDay.getDay() === 0) {
       firstDay = new Date(firstDay.getTime() - 6 * CONSTANTS.MS_IN_DAY);
     } else if (firstDay.getDay() > 0) {
       firstDay = new Date(firstDay.getTime() - (firstDay.getDay() - 1) * CONSTANTS.MS_IN_DAY);
     }
-    for (let i = 0; i < 35; i++) {
-      month.push(new Date(firstDay.getTime() + i * CONSTANTS.MS_IN_DAY));
-    }
-    return month;
+    return firstDay;
   }
 
   nextMonth(date: Date) {
