@@ -1,6 +1,6 @@
-<div class="events-list">
-    <div *ngFor="let event of events">
-        <div>{{event.name}}</div>
-        <div>{{event.date}}</div>
+<div class="events-list" [style.left]="x + 'px'">
+    <div class="events-list__event" *ngFor="let event of events" (click)="selectEvent(event)">
+        <div class="events-list__name">{{event.name}}</div>
+        <div>{{event.date | date:'dd.MM.yyyy'}}</div>
     </div>
 </div>

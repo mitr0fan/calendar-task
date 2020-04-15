@@ -1,22 +1,29 @@
-import { Component, ViewChild, ComponentFactoryResolver } from '@angular/core';
+import { Component, ViewChild, ComponentFactoryResolver, OnDestroy } from '@angular/core';
 import { HostDirective } from 'src/app/directives-pipes/host.directive';
 import { QuickAddEventComponent } from '../quick-add-event/quick-add-event.component';
 import { SearchEventsPopupComponent } from '../search-events-popup/search-events-popup.component';
 import { SearchEventService } from 'src/app/services/search-event.service';
+import { debounceTime, filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search-panel',
   templateUrl: './search-panel.component.html',
   styleUrls: ['./search-panel.component.scss']
 })
-export class SearchPanelComponent {
+export class SearchPanelComponent implements OnDestroy {
+
+  @ViewChild(HostDirective, {static: true}) host: HostDirective;
+  sub: Subscription;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private searchEventsService: SearchEventService
   ) { }
 
-  @ViewChild(HostDirective, {static: true}) host: HostDirective;
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 
   openEventEditor(e: Event) {
     this.host.viewContainerRef.clear();
@@ -30,17 +37,35 @@ export class SearchPanelComponent {
     this.host.viewContainerRef.clear();
   }
 
-  openSearchList() {
+  openSearchList(e: Event, events: any) {
     const resolver = this.componentFactoryResolver.resolveComponentFactory(SearchEventsPopupComponent);
-    const searchElem = this.host.viewContainerRef.createComponent(resolver);
+    const el = this.host.viewContainerRef.createComponent(resolver);
+    el.instance.inputEvent = e;
+    el.instance.events = events;
+    el.instance.parent = this;
   }
 
   closeSearchList() {
     this.host.viewContainerRef.clear();
   }
 
-  searchEvents(value: string) {
+  searchEvents(e: Event, value: string) {
     this.searchEventsService.searchValue$.next(value);
+    this.sub = this.searchEventsService.searchValue$.pipe(
+      debounceTime(500),
+    )
+    .subscribe((v: string) => {
+      if (v.length > 2) {
+        const events = this.searchEventsService.searchEvent(v);
+        if (events.length > 0) {
+          this.openSearchList(e, events);
+        } else {
+          this.closeSearchList();
+        }
+      } else {
+        this.closeSearchList();
+      }
+    });
   }
 
 }

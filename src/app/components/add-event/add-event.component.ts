@@ -81,7 +81,10 @@ export class AddEventComponent implements OnInit {
   }
 
   setCoords() {
-    const target = this.eventClick.target as HTMLElement;
+    let target = this.eventClick.target as HTMLElement;
+    if (target.parentElement.classList[0] === 'day') {
+      target = target.parentElement;
+    }
     if (target.getBoundingClientRect().left < 600) {
       this.coords.x =
         target.getBoundingClientRect().left

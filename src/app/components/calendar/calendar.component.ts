@@ -7,6 +7,7 @@ import { EventsService } from 'src/app/services/events.service';
 import { EventsStore } from 'src/app/types/events-store';
 import { DatePipe } from '@angular/common';
 import { Event as EventInterface } from 'src/app/types/event';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-calendar',
@@ -25,7 +26,8 @@ export class CalendarComponent implements OnInit {
     private createCalendar: CreateCalendarService,
     private resolver: ComponentFactoryResolver,
     private eventsService: EventsService,
-    public datePipe: DatePipe
+    public datePipe: DatePipe,
+    private ls: LocalStorageService
   ) { }
 
   ngOnInit() {
@@ -34,6 +36,10 @@ export class CalendarComponent implements OnInit {
     this.eventsService.changeEvent$
     .subscribe(() => {
       this.events = {...this.eventsService.getEvents()};
+    });
+    this.createCalendar.changeMonth$.subscribe(dates => {
+      this.dates = this.createCalendar.createMonth(dates);
+      this.changeCurrentDate();
     });
   }
 

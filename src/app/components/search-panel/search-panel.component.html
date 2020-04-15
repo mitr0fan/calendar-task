@@ -17,9 +17,7 @@
             class="search-panel__search-event"
             type="text"
             placeholder="Событие, дата или участник"
-            (focus)="openSearchList()"
-            (blur)="closeSearchList()"
-            (keyup)="searchEvents($event.target.value)"
+            (keyup)="searchEvents($event, $event.target.value)"
         >
     </div>
 </header>

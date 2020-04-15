@@ -1,0 +1,27 @@
+@import '../../constants/styles.constants.scss';
+.events-list {
+    padding-top: 12px;
+    position: absolute;
+    max-height: 300px;
+    width: 201px;
+    top: 60px;
+    right: 0;
+    background: #fff;
+    overflow-y: auto;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.404);
+    .events-list__event {
+        padding: 5px;
+        font-size: 8pt;
+        border-bottom: 1px solid;
+        margin-bottom: 5px;
+        &:hover {
+            cursor: pointer;
+            background: $blue;
+            color: #fff;
+        }
+    }
+    .events-list__name {
+        font-size: 10pt;
+        font-weight: 500;
+    }
+}

@@ -2,6 +2,7 @@ interface Constants {
     MS_IN_DAY: number;
     DAYS_OF_WEEK: string[];
     MONTHS: string[];
+    LOCAL_STORAGE: string;
 }
 
 export const CONSTANTS: Constants = {
@@ -28,5 +29,6 @@ export const CONSTANTS: Constants = {
         'Октябрь',
         'Ноябрь',
         'Декабрь',
-    ]
+    ],
+    LOCAL_STORAGE: 'calendar-events'
 };

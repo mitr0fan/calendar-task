@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CONSTANTS } from '../constants/constants';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CreateCalendarService {
+  changeMonth$: Subject<Date> = new Subject();
 
   constructor() { }
 
