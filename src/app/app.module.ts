@@ -15,25 +15,25 @@ import { DatePipe } from '@angular/common';
 import { ContainerDirective } from './directives-pipes/container.directive';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SearchPanelComponent,
-    DateItemComponent,
-    CalendarComponent,
-    CurrentDayDirective,
-    QuickAddEventComponent,
-    AddEventComponent,
-    SearchEventsPopupComponent,
-    HostDirective,
-    ContainerDirective,
-  ],
-  imports: [
-    BrowserModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
-  providers: [DatePipe],
-  bootstrap: [AppComponent],
-  entryComponents: [QuickAddEventComponent, AddEventComponent, SearchEventsPopupComponent]
+    declarations: [
+        AppComponent,
+        SearchPanelComponent,
+        DateItemComponent,
+        CalendarComponent,
+        CurrentDayDirective,
+        QuickAddEventComponent,
+        AddEventComponent,
+        SearchEventsPopupComponent,
+        HostDirective,
+        ContainerDirective,
+    ],
+    imports: [BrowserModule, ReactiveFormsModule, FormsModule],
+    providers: [DatePipe],
+    bootstrap: [AppComponent],
+    entryComponents: [
+        QuickAddEventComponent,
+        AddEventComponent,
+        SearchEventsPopupComponent,
+    ],
 })
-export class AppModule { }
+export class AppModule {}

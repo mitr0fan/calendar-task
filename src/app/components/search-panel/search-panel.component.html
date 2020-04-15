@@ -1,24 +1,23 @@
 <header class="header">
     <div class="search-panel">
-        <button
-            class="search-panel__button"
-            (click)="openEventEditor($event)"
-        >
+        <button class="search-panel__button" (click)="openEventEditor($event)">
             Добавить
         </button>
-        <button
-            class="search-panel__button"
-        >
+        <button class="search-panel__button">
             Обновить
         </button>
         <div class="empty"></div>
-        <img class="search-panel__search-img" src="../../../assets/search.png" alt="search">
+        <img
+            class="search-panel__search-img"
+            src="../../../assets/search.png"
+            alt="search"
+        />
         <input
             class="search-panel__search-event"
             type="text"
             placeholder="Событие, дата или участник"
             (keyup)="searchEvents($event, $event.target.value)"
-        >
+        />
     </div>
 </header>
 <ng-template appHost></ng-template>

@@ -6,32 +6,34 @@ import { EventsService } from 'src/app/services/events.service';
 import { CreateCalendarService } from 'src/app/services/create-calendar.service';
 
 @Component({
-  selector: 'app-search-events-popup',
-  templateUrl: './search-events-popup.component.html',
-  styleUrls: ['./search-events-popup.component.scss']
+    selector: 'app-search-events-popup',
+    templateUrl: './search-events-popup.component.html',
+    styleUrls: ['./search-events-popup.component.scss'],
 })
 export class SearchEventsPopupComponent implements OnInit {
-  events: EventInterface[];
-  sub: Subscription;
-  inputEvent: Event;
-  x: number;
-  parent: SearchPanelComponent;
+    events: EventInterface[];
+    sub: Subscription;
+    inputEvent: Event;
+    x: number;
+    parent: SearchPanelComponent;
 
-  constructor(private eventsService: EventsService, private calendar: CreateCalendarService) { }
+    constructor(
+        private eventsService: EventsService,
+        private calendar: CreateCalendarService
+    ) {}
 
-  ngOnInit() {
-    const t = this.inputEvent.target as HTMLElement;
-    this.x = t.getBoundingClientRect().left + 1;
+    ngOnInit() {
+        const t = this.inputEvent.target as HTMLElement;
+        this.x = t.getBoundingClientRect().left + 1;
 
-    document.onclick = () => {
-      this.parent.closeSearchList();
-    };
-  }
+        document.onclick = () => {
+            this.parent.closeSearchList();
+        };
+    }
 
-  selectEvent(event: EventInterface) {
-    this.calendar.changeMonth$.next(new Date(event.date));
-    this.eventsService.changeEvent$.next('change');
-    this.parent.closeSearchList();
-  }
-
+    selectEvent(event: EventInterface) {
+        this.calendar.changeMonth$.next(new Date(event.date));
+        this.eventsService.changeEvent$.next('change');
+        this.parent.closeSearchList();
+    }
 }

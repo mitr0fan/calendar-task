@@ -1,10 +1,8 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[appHost]'
+    selector: '[appHost]',
 })
 export class HostDirective {
-
-  constructor(public viewContainerRef: ViewContainerRef) { }
-
+    constructor(public viewContainerRef: ViewContainerRef) {}
 }

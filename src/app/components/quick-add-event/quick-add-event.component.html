@@ -5,9 +5,12 @@
 >
     <span (click)="close()" class="quick-add-event__exit">🞩</span>
     <input
-        class="quick-add-event__input" type="text"
+        class="quick-add-event__input"
+        type="text"
         placeholder="05.10.2020, День рождения"
         [(ngModel)]="eventData"
-    >
-    <button class="quick-add-event__button" (click)="addEvent()">Создать</button>
+    />
+    <button class="quick-add-event__button" (click)="addEvent()">
+        Создать
+    </button>
 </div>

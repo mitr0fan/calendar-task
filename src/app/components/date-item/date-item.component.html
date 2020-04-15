@@ -1,6 +1,8 @@
 <div [ngClass]="event ? 'day day_eventExist' : 'day'">
-    <span *ngIf="index < 7">{{daysOfWeek[index]}}, {{day | date:'d'}}</span>
-    <span *ngIf="index > 6">{{day | date:'d'}}</span>
-    <span *ngIf="event" class="day__name">{{event.name}}</span>
-    <span *ngIf="event">{{event.participants}}</span>
+    <span *ngIf="index < 7"
+        >{{ daysOfWeek[index] }}, {{ day | date: 'd' }}</span
+    >
+    <span *ngIf="index > 6">{{ day | date: 'd' }}</span>
+    <span *ngIf="event" class="day__name">{{ event.name }}</span>
+    <span *ngIf="event">{{ event.participants }}</span>
 </div>

@@ -24,7 +24,8 @@
     .quick-add-event__button {
         @include button();
     }
-    &::after, &::before {
+    &::after,
+    &::before {
         content: '';
         position: absolute;
         height: 15px;

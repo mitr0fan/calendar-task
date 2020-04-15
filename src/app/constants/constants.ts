@@ -30,5 +30,5 @@ export const CONSTANTS: Constants = {
         'Ноябрь',
         'Декабрь',
     ],
-    LOCAL_STORAGE: 'calendar-events'
+    LOCAL_STORAGE: 'calendar-events',
 };
