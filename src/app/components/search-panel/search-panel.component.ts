@@ -55,6 +55,7 @@ export class SearchPanelComponent implements OnDestroy {
       debounceTime(500),
     )
     .subscribe((v: string) => {
+      this.closeSearchList();
       if (v.length > 2) {
         const events = this.searchEventsService.searchEvent(v);
         if (events.length > 0) {
