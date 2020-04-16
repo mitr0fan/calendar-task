@@ -29,14 +29,13 @@ export class CalendarComponent implements OnInit, OnDestroy {
     currentDate: string;
     selectedDay: Date;
     @ViewChild(HostDirective, { static: true }) host: HostDirective;
-    sub: Subscription;
+    sub: Subscription = new Subscription();
 
     constructor(
         private createCalendar: CreateCalendarService,
         private resolver: ComponentFactoryResolver,
         private eventsService: EventsService,
         public datePipe: DatePipe,
-        private ls: LocalStorageService
     ) {}
 
     ngOnInit() {

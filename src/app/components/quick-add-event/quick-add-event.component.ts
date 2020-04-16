@@ -36,21 +36,25 @@ export class QuickAddEventComponent implements OnInit {
             const year = this.eventData.split(',')[0].slice(6);
             const month = this.eventData.split(',')[0].slice(3, 5);
             const day = this.eventData.split(',')[0].slice(0, 2);
-            if (isExists(+year, +month - 1, +day)) {
-                const newEvent: EventInterface = {
-                    name: this.eventData.split(',')[1],
-                    date: new Date(`${month}.${day}.${year}`),
-                    participants: [],
-                    description: '',
-                };
-                this.eventsService.addEvent(
-                    `${day}.${month}.${year}`,
-                    newEvent
-                );
-                this.eventsService.changeEvent$.next('change');
-                this.close();
+            if (this.eventData.split(',')[1]) {
+                if (isExists(+year, +month - 1, +day)) {
+                    const newEvent: EventInterface = {
+                        name: this.eventData.split(',')[1],
+                        date: new Date(`${month}.${day}.${year}`),
+                        participants: [],
+                        description: '',
+                    };
+                    this.eventsService.addEvent(
+                        `${day}.${month}.${year}`,
+                        newEvent
+                    );
+                    this.eventsService.changeEvent$.next('change');
+                    this.close();
+                } else {
+                    alert('Неверная дата!');
+                }
             } else {
-                alert('Неверная дата!');
+                alert('Введите название события!');
             }
         }
     }
