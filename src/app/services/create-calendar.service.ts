@@ -16,6 +16,12 @@ export class CreateCalendarService {
         for (let i = 0; i < 35; i++) {
             month.push(new Date(firstDay.getTime() + i * CONSTANTS.MS_IN_DAY));
         }
+        const monthOfNextDay = new Date(month[34].getTime() + CONSTANTS.MS_IN_DAY).getMonth();
+        if (monthOfNextDay === month[10].getMonth()) {
+            for (let i = 35; i < 42; i++) {
+                month.push(new Date(firstDay.getTime() + i * CONSTANTS.MS_IN_DAY));
+            }
+        }
         return month;
     }
 

@@ -5,6 +5,7 @@ import {
     ComponentFactoryResolver,
     ComponentFactory,
     ComponentRef,
+    OnDestroy,
 } from '@angular/core';
 import { CreateCalendarService } from 'src/app/services/create-calendar.service';
 import { CONSTANTS } from 'src/app/constants/constants';
@@ -15,18 +16,20 @@ import { EventsStore } from 'src/app/types/events-store';
 import { DatePipe } from '@angular/common';
 import { Event as EventInterface } from 'src/app/types/event';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-calendar',
     templateUrl: './calendar.component.html',
     styleUrls: ['./calendar.component.scss'],
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnDestroy {
     dates: Date[];
     events: EventsStore;
     currentDate: string;
     selectedDay: Date;
     @ViewChild(HostDirective, { static: true }) host: HostDirective;
+    sub: Subscription;
 
     constructor(
         private createCalendar: CreateCalendarService,
@@ -39,13 +42,18 @@ export class CalendarComponent implements OnInit {
     ngOnInit() {
         this.dates = this.createCalendar.createMonth(new Date());
         this.changeCurrentDate();
-        this.eventsService.changeEvent$.subscribe(() => {
+        const sub1 = this.eventsService.changeEvent$.subscribe(() => {
             this.events = { ...this.eventsService.getEvents() };
         });
-        this.createCalendar.changeMonth$.subscribe((dates) => {
+        const sub2 = this.createCalendar.changeMonth$.subscribe((dates) => {
             this.dates = this.createCalendar.createMonth(dates);
             this.changeCurrentDate();
         });
+        this.sub.add(sub1);
+        this.sub.add(sub2);
+    }
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
     changeCurrentDate() {
