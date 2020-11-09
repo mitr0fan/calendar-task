@@ -3,8 +3,15 @@
         <button class="search-panel__button" (click)="openEventEditor($event)">
             Добавить
         </button>
-        <button class="search-panel__button">
-            Обновить
+        <button
+            class="search-panel__button" style="width: auto;"
+            (click)="changeTheme()"
+        >
+            {{
+                (theme$ | async) === Themes.default
+                ? 'Ночная тема'
+                : 'Стандартная тема'
+            }}
         </button>
         <div class="empty"></div>
         <img

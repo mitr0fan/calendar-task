@@ -8,12 +8,11 @@
     justify-content: center;
 }
 .calendar {
-    display: flex;
-    flex-wrap: wrap;
-    font-size: $fs-normal;
+    display: grid;
+    gap: 5px;
+    width: 100%;
+    grid-template-columns: repeat(7, 1fr);
     color: rgb(90, 90, 90);
-    width: 994px;
-    border: 1px solid $gray;
 }
 .change-month {
     display: flex;

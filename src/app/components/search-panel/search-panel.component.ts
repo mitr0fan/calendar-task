@@ -8,9 +8,11 @@ import { HostDirective } from 'src/app/directives-pipes/host.directive';
 import { QuickAddEventComponent } from '../quick-add-event/quick-add-event.component';
 import { SearchEventsPopupComponent } from '../search-events-popup/search-events-popup.component';
 import { SearchEventService } from 'src/app/services/search-event.service';
-import { debounceTime, filter } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { debounceTime, filter, takeUntil, tap } from 'rxjs/operators';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { ContainerDirective } from 'src/app/directives-pipes/container.directive';
+import { ThemeService } from 'src/app/services/theme.service';
+import { Themes } from 'src/app/constants/themes';
 
 @Component({
     selector: 'app-search-panel',
@@ -21,15 +23,28 @@ export class SearchPanelComponent implements OnDestroy {
     @ViewChild(HostDirective, { static: true }) host: HostDirective;
     @ViewChild(ContainerDirective, { static: true })
     container: ContainerDirective;
-    sub: Subscription;
+    onDestroy$ = new Subject();
+    theme$ = new BehaviorSubject<Themes>(Themes.default);
+    Themes = Themes;
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
-        private searchEventsService: SearchEventService
-    ) {}
+        private searchEventsService: SearchEventService,
+        private themeService: ThemeService,
+    ) {
+        themeService.currentTheme$
+            .pipe(
+                takeUntil(this.onDestroy$),
+                tap(value => {
+                    this.theme$.next(value);
+                }),
+            )
+            .subscribe();
+    }
 
     ngOnDestroy() {
-        this.sub.unsubscribe();
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 
     openEventEditor(e: Event) {
@@ -64,8 +79,11 @@ export class SearchPanelComponent implements OnDestroy {
 
     searchEvents(e: Event, value: string) {
         this.searchEventsService.searchValue$.next(value);
-        this.sub = this.searchEventsService.searchValue$
-            .pipe(debounceTime(500))
+        this.searchEventsService.searchValue$
+            .pipe(
+                takeUntil(this.onDestroy$),
+                debounceTime(500)
+            )
             .subscribe((v: string) => {
                 this.closeSearchList();
                 if (v.length > 2) {
@@ -79,5 +97,9 @@ export class SearchPanelComponent implements OnDestroy {
                     this.closeSearchList();
                 }
             });
+    }
+
+    changeTheme() {
+        this.themeService.changeTheme();
     }
 }

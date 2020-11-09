@@ -1,6 +1,10 @@
 .container {
-    height: 100%;
+    height: calc(100% - 80px);
     width: 100%;
     display: flex;
     justify-content: center;
+
+    &_dark {
+        background-color: #000000b3;
+    }
 }

@@ -1,4 +1,6 @@
-<div [ngClass]="event ? 'day day_eventExist' : 'day'">
+<div
+    [ngClass]="themeClasses[theme$ | async] + ' ' + (event ? 'day day_eventExist' : 'day')"
+>
     <span *ngIf="index < 7"
         >{{ daysOfWeek[index] }}, {{ day | date: 'd' }}</span
     >
